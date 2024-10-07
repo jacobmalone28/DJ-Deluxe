@@ -12,7 +12,8 @@ import SwiftData
 struct DJ_DeluxeApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Station.self,
+            Host.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,8 +26,12 @@ struct DJ_DeluxeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SpotifyLoginView()
         }
         .modelContainer(sharedModelContainer)
     }
 }
+
+#Preview(body: {
+    SpotifyLoginView()
+})
