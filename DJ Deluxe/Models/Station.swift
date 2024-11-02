@@ -11,17 +11,20 @@ import SwiftData
 @Model
 final class Station {
     @Attribute(.unique) var name: String // name of the radio station
-    
     var timestamp: Date
     var hosts: [Host]
     var genres: [RadioGenre]
     
-    init(name: String, timestamp: Date, hosts: [Host], genres: [RadioGenre]) {
+    init(name: String, hosts: [Host], genres: [RadioGenre]) {
         self.name = name
-        self.timestamp = timestamp
+        self.timestamp = Date.now
         self.hosts = hosts
         self.genres = genres
     }
+    
+    static var exampleStation = Station(name: "Test Station", hosts: [Host.exampleHost], genres: [RadioGenre.pop, RadioGenre.rnb, RadioGenre.rock])
+    
+    
 }
 
 enum RadioGenre: String, CaseIterable, Codable {

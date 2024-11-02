@@ -24,4 +24,6 @@ final class Host {
         self.desc = desc
         self.img = img
     }
+    
+    static var exampleHost = Host(name: "John Doe", voice: "Big Voice", personality: ["cool": 5], desc: "Just a test DJ", img: URL(filePath: "ah"))
 }
