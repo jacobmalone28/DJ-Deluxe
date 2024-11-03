@@ -10,21 +10,41 @@ import SwiftData
 
 @Model
 final class Station {
-    @Attribute(.unique) var name: String // name of the radio station
+    @Attribute(.unique) var name: String
     var timestamp: Date
     var hosts: [Host]
-    var genres: [RadioGenre]
+    var genres: [GenreSelection]
+    var icon: String = "🎵"
     
-    init(name: String, hosts: [Host], genres: [RadioGenre]) {
+    init(name: String, hosts: [Host], genres: [GenreSelection]) {
         self.name = name
         self.timestamp = Date.now
         self.hosts = hosts
         self.genres = genres
+        self.icon = "🎵"
     }
     
-    static var exampleStation = Station(name: "Test Station", hosts: [Host.exampleHost], genres: [RadioGenre.pop, RadioGenre.rnb, RadioGenre.rock])
+    static var exampleStation = Station(
+        name: "Test Station",
+        hosts: [Host.exampleHost],
+        genres: [
+            GenreSelection(mainGenre: .rock, subGenre: .some(.hardRock)),
+            GenreSelection(mainGenre: .electronic, subGenre: .some(.deepHouse))
+        ]
+    )
+}
+
+// New struct to represent a genre selection with optional subgenre
+struct GenreSelection: Codable {
+    var mainGenre: RadioGenre
+    var subGenre: SubGenre?
     
-    
+    var displayName: String {
+        if let subGenre = subGenre {
+            return "\(mainGenre.rawValue) - \(subGenre.name)"
+        }
+        return mainGenre.rawValue
+    }
 }
 
 enum RadioGenre: String, CaseIterable, Codable {
@@ -53,9 +73,75 @@ enum RadioGenre: String, CaseIterable, Codable {
     case easyListening = "Easy Listening"
     case christian = "Christian"
     case gospel = "Gospel"
-
-    //Example of using CaseIterable to get an array of all cases:
+    
+    // Get available subgenres for this main genre
+    var availableSubGenres: [SubGenre] {
+        SubGenre.allCases.filter { $0.parentGenre == self }
+    }
+    
     static var allGenres: [RadioGenre] {
         return self.allCases
+    }
+}
+
+enum SubGenre: String, CaseIterable, Codable {
+    // Rock subgenres
+    case hardRock = "Hard Rock"
+    case softRock = "Soft Rock"
+    case progressiveRock = "Progressive Rock"
+    case psychedelicRock = "Psychedelic Rock"
+    
+    // Electronic subgenres
+    case deepHouse = "Deep House"
+    case techHouse = "Tech House"
+    case ambient = "Ambient"
+    case dubstep = "Dubstep"
+    case drumAndBass = "Drum and Bass"
+    
+    // Hip Hop subgenres
+    case trap = "Trap"
+    case oldSchool = "Old School"
+    case conscious = "Conscious"
+    case gangsta = "Gangsta"
+    
+    // Jazz subgenres
+    case bebop = "Bebop"
+    case smoothJazz = "Smooth Jazz"
+    case fusion = "Fusion"
+    case swing = "Swing"
+    
+    // Metal subgenres
+    case heavyMetal = "Heavy Metal"
+    case blackMetal = "Black Metal"
+    case deathMetal = "Death Metal"
+    case thrashmetal = "Thrash Metal"
+    
+    // Pop subgenres
+    case synthPop = "Synth Pop"
+    case kPop = "K-Pop"
+    case latinPop = "Latin Pop"
+    case artPop = "Art Pop"
+    
+    // Property to define which main genre each subgenre belongs to
+    var parentGenre: RadioGenre {
+        switch self {
+        case .hardRock, .softRock, .progressiveRock, .psychedelicRock:
+            return .rock
+        case .deepHouse, .techHouse, .ambient, .dubstep, .drumAndBass:
+            return .electronic
+        case .trap, .oldSchool, .conscious, .gangsta:
+            return .hipHop
+        case .bebop, .smoothJazz, .fusion, .swing:
+            return .jazz
+        case .heavyMetal, .blackMetal, .deathMetal, .thrashmetal:
+            return .metal
+        case .synthPop, .kPop, .latinPop, .artPop:
+            return .pop
+        }
+    }
+    
+    
+    var name: String {
+        return self.rawValue
     }
 }

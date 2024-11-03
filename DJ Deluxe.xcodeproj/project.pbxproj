@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F6528B542CB47620003C2FEC /* SpotifyiOS in Frameworks */ = {isa = PBXBuildFile; productRef = F6528B532CB47620003C2FEC /* SpotifyiOS */; };
+		F66722782CD6DCE0000C1BF1 /* EmojiPicker in Frameworks */ = {isa = PBXBuildFile; productRef = F66722772CD6DCE0000C1BF1 /* EmojiPicker */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6528B542CB47620003C2FEC /* SpotifyiOS in Frameworks */,
+				F66722782CD6DCE0000C1BF1 /* EmojiPicker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,6 +75,7 @@
 			name = "DJ Deluxe";
 			packageProductDependencies = (
 				F6528B532CB47620003C2FEC /* SpotifyiOS */,
+				F66722772CD6DCE0000C1BF1 /* EmojiPicker */,
 			);
 			productName = "DJ Deluxe";
 			productReference = F65296542CADF0EF00B1C72F /* DJ Deluxe.app */;
@@ -104,6 +107,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F6528B522CB47620003C2FEC /* XCLocalSwiftPackageReference "../../../Downloads/ios-sdk-3.0.0" */,
+				F66722762CD6DCE0000C1BF1 /* XCRemoteSwiftPackageReference "EmojiPicker" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F65296552CADF0EF00B1C72F /* Products */;
@@ -349,10 +353,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		F66722762CD6DCE0000C1BF1 /* XCRemoteSwiftPackageReference "EmojiPicker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kelvas09/EmojiPicker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		F6528B532CB47620003C2FEC /* SpotifyiOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SpotifyiOS;
+		};
+		F66722772CD6DCE0000C1BF1 /* EmojiPicker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F66722762CD6DCE0000C1BF1 /* XCRemoteSwiftPackageReference "EmojiPicker" */;
+			productName = EmojiPicker;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

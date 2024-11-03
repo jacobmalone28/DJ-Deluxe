@@ -33,5 +33,5 @@ struct DJ_DeluxeApp: App {
 }
 
 #Preview(body: {
-    SpotifyLoginView()
+    StationsView()
 })

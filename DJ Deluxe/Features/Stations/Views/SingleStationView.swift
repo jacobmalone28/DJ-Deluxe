@@ -8,44 +8,92 @@
 import SwiftUI
 
 struct SingleStationView: View {
-    
     let station: Station
     
-    func joinAllGenres() -> String {
-        station.genres.map { $0.rawValue }.joined(separator: ", ")
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
+                .fill(Color.blue)
+            VStack {
+                Spacer()
+                HStack{
+                    VStack(alignment: .leading) {
+                        Text(station.name)
+                            .font(.largeTitle)
+                            .bold()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Text(station.genres.map { $0.displayName }.joined(separator: ", "))
+                            .foregroundColor(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    Spacer()
+                    Button {
+                        print("Play")
+                    } label: {
+                        Image(systemName: "play.fill")
+                            .font(.title)
+                            .foregroundColor(.white)
+                    }
+                    .frame(alignment: .bottomLeading)
+                }
+            }
+            .padding()
+            
+        }
+        .frame(height: 300)
+        Text("Hosted by")
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(Edge.Set(arrayLiteral: .leading, .top))
+            .font(.subheadline)
+        
+        ForEach(station.hosts) { host in
+            NavigationLink {
+                HostDetailsView(host: host)
+            } label: {
+                SingleHostRow(host: host)
+            }
+            
+            
+        }
+        Spacer()
     }
+}
+
+struct SingleHostRow: View {
+    let host: Host
     
     var body: some View {
-        VStack(alignment: .leading) {
+        NavigationLink {
+            HostDetailsView(host: host)
+        } label: {
             HStack {
                 ZStack {
                     RoundedRectangle(cornerSize: CGSize(width: 20, height: 20))
                         .frame(width: 80, height: 80)
                         .foregroundStyle(.blue)
-                    Text("🎵").font(.title)
                 }
                 VStack(alignment: .leading) {
-                    Text(station.name)
+                    Text(host.name)
                         .font(.headline)
-                    Text("with \(station.hosts[0].name)")
-                    Text(joinAllGenres())
+                    Text(host.desc)
                         .foregroundColor(.secondary)
                 }
-                
                 Spacer()
-                Button {
-                    
-                } label: {
-                    Image(systemName: "info.circle")
-                        .imageScale(.large)
-                        .foregroundStyle(.secondary)
-                }
+                Image(systemName: "chevron.forward")
+                    .font(.title)
+                    .foregroundColor(.gray)
             }
+            
+            .padding(.horizontal)
         }
-        .font(.caption)
+                
     }
 }
 
+
 #Preview {
-    SingleStationView(station: Station.exampleStation)
+    NavigationView {
+        SingleStationView(station: Station.exampleStation)
+        Spacer()
+    }
 }
